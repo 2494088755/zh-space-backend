@@ -25,9 +25,6 @@ public class FileUploadController {
     @PostMapping("/api/upload")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            // 更改上传路径为 /var/img
-//            Path uploadDirectory = Paths.get("/var/img");
-
             if (!Files.exists(uploadDirectory)) {
                 Files.createDirectories(uploadDirectory);
             }
