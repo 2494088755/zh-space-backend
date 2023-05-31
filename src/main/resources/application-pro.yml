@@ -5,10 +5,10 @@ spring:
     multipart:
       max-request-size: 10MB
       max-file-size: 10MB
-  profiles:
-    active: dev
 
 api:
   client_id: 'bQFoUxqy22W5c2DTbq5HMsGI'
   client_secret: 'NOty9xqMB2Q6rHZimi5R76YGSOfw2evG'
 
+upload:
+  path: /var/img/uploads

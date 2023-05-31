@@ -1,5 +1,6 @@
 package com.hy.hzspacebackend.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,11 @@ import java.util.stream.Stream;
 @RestController
 @CrossOrigin
 public class FileUploadController {
-    private final Path uploadDirectory = Paths.get("/var/img/uploads");
+
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    private final Path uploadDirectory = Paths.get(uploadPath);
 //    private final Path uploadDirectory = Paths.get("D:\\img");
 
     @PostMapping("/api/upload")
