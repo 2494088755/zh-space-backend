@@ -15,26 +15,26 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
 public class FileUploadController {
     private final Path uploadDirectory = Paths.get("/var/img/uploads");
+//    private final Path uploadDirectory = Paths.get("D:\\img");
 
     @PostMapping("/api/upload")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            // 更改上传路径为 /var/img
-//            Path uploadDirectory = Paths.get("/var/img");
-
             if (!Files.exists(uploadDirectory)) {
                 Files.createDirectories(uploadDirectory);
             }
-
-            Path targetLocation = uploadDirectory.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return ResponseEntity.ok("File uploaded successfully.");
+            String filename = UUID.randomUUID() + "."+Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
+            Path targetLocation = uploadDirectory.resolve(filename);
+            file.transferTo(targetLocation);
+            return ResponseEntity.ok(targetLocation.toString());
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("Unable to upload file.");
         }
