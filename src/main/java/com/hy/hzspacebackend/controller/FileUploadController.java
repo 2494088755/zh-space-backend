@@ -8,12 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +27,14 @@ public class FileUploadController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    private final Path uploadDirectory = Paths.get(uploadPath);
-//    private final Path uploadDirectory = Paths.get("D:\\img");
+    private Path uploadDirectory;
+
+    @PostConstruct
+    public void initUploadDirectory() {
+        uploadDirectory = Paths.get(uploadPath);
+    }
+
+    //    private final Path uploadDirectory = Paths.get("D:\\img");
 
     @PostMapping("/api/upload")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {

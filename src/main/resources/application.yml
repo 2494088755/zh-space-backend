@@ -6,7 +6,7 @@ spring:
       max-request-size: 10MB
       max-file-size: 10MB
   profiles:
-    active: dev
+    active: pro
 
 api:
   client_id: 'bQFoUxqy22W5c2DTbq5HMsGI'
